@@ -98,7 +98,7 @@
         <details><summary>Where do sign-in and audio happen?</summary><p>You sign in to YouTube Music in its own app web view. YouTube Music handles the account and audio; Avni mirrors playback state and presents library controls.</p></details>
         <details><summary>Does the equalizer change the sound?</summary><p>No. YouTube Music owns audio playback and Avni does not modify its audio. The equalizer panel shows that control is unavailable.</p></details>
         <details><summary>Can I use old Winamp skins?</summary><p>You can import a compatible classic <code>.wsz</code> skin from your device. Avni includes three original skins and does not bundle historical third-party skin collections.</p></details>
-        <details><summary>Does Avni store my library in the cloud?</summary><p>No Avni account, cloud library or sync service is provided. App preferences, recent searches, playback history and imported skins are stored locally.</p></details>
+        <details><summary>Does Avni store my library in the cloud?</summary><p>No Avni account, cloud library or sync service is provided. Appearance settings, panel visibility and imported skin files are stored locally. The current app does not persist recent searches or playback history. Google and YouTube still receive requests for sign-in, library, playback and artwork.</p></details>
       </div>
     </div>
   </section>
@@ -108,7 +108,7 @@
       <p class="eyebrow">Privacy</p>
       <h2>Your provider session stays with YouTube Music.</h2>
       <p class="lede narrow">Avni does not ask for your Google password or send it to an Avni server. WebKit manages the YouTube Music session on your device. Google and YouTube receive requests needed for sign-in, library, playback and artwork under their own policies.</p>
-      <p class="small">Avni has no account, cloud sync or external analytics endpoint. Startup timings are measured locally and may appear in the app process log. Sign out in YouTube Music; deleting Avni's local app data removes local settings, history and imported skins. <a href="https://github.com/ramazanayyildiz/avni-site/blob/main/README.md">Concept site repository and project status</a>.</p>
+      <p class="small">Avni has no account, cloud sync or external analytics endpoint. Startup timings are measured locally and may appear in the app process log. Remove imported skins in Appearance; clearing Avni's app-local data removes appearance settings and skin files. Classic panel visibility is stored in the app UI's local web storage. Sign out in YouTube Music to clear its separate WebKit session. <a href="https://github.com/ramazanayyildiz/avni-site/blob/main/README.md">Concept site repository and project status</a>.</p>
     </div>
   </section>
 </main>
