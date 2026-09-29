@@ -477,6 +477,18 @@
     document.querySelectorAll(".reveal:not(.in)").forEach((el) => io.observe(el));
   }
 
+  document.querySelector(".nav nav")?.addEventListener("focusin", (event) => {
+    const link = event.target instanceof Element ? event.target.closest("a") : null;
+    if (!link) return;
+
+    const nav = event.currentTarget;
+    const navRect = nav.getBoundingClientRect();
+    const linkRect = link.getBoundingClientRect();
+    const inset = 4;
+    if (linkRect.left < navRect.left + inset) nav.scrollLeft -= navRect.left + inset - linkRect.left;
+    else if (linkRect.right > navRect.right - inset) nav.scrollLeft += linkRect.right - (navRect.right - inset);
+  });
+
   addEventListener("resize", () => { if (skins) { layout(); if (reduced) scheduleFrame(); } });
   reducedQuery.addEventListener?.("change", (e) => {
     reduced = e.matches;
