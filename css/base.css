@@ -80,6 +80,14 @@ h2 { font-size: clamp(30px, 4.4vw, 54px); line-height: 1.04; letter-spacing: -.0
 .term .m { color: var(--muted); }
 .small { color: var(--muted); font-size: 14px; }
 code { font-size: .9em; }
+.status-card { border: 1px solid var(--accent); padding: 20px 22px; margin: 0 0 18px; display: grid; gap: 5px; background: rgba(168,238,71,.04); }
+.status-card b { color: var(--accent); font: 600 12px/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+.status-card span, .faq-list p { color: var(--muted); }
+.faq-list { display: grid; gap: 12px; margin-top: 36px; }
+.faq-list details { border: 1px solid var(--line); padding: 17px 20px; background: rgba(255,255,255,.015); }
+.faq-list summary { cursor: pointer; font-weight: 600; }
+.faq-list summary:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.faq-list p { margin: 12px 0 0; font-size: 15px; }
 
 .foot { border-top: 1px solid var(--line); padding: 44px 24px 60px; text-align: center; color: var(--muted); font-size: 14px; }
 .foot p { max-width: 720px; margin: 0 auto 8px; }
