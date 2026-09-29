@@ -461,7 +461,7 @@
       cv.setAttribute("role", "img"); cv.setAttribute("aria-label", `${skin.name} skin preview`);
       renderClassic(skin, TRACK.start, 0);
       cv.getContext("2d").drawImage(skin.canvas, 0, 0, 275, 116, 0, 0, 275, 116);
-      const h = document.createElement("h4");
+      const h = document.createElement("h3");
       h.innerHTML = `${skin.name} <small>${skin.tag === "Built-in" ? "Built-in" : "Demo · skin kit"}</small>`;
       const sw = document.createElement("div"); sw.className = "swatches";
       for (const hex of [skin.panel, skin.bg, skin.accent, skin.edge, skin.text]) {
