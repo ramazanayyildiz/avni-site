@@ -25,8 +25,9 @@ section[id] { scroll-margin-top: 78px; }
 
 /* Nav */
 .nav { position: fixed; inset: 0 0 auto 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; background: linear-gradient(var(--bg) 30%, transparent); }
-.brand { font-weight: 700; letter-spacing: -.02em; text-decoration: none; display: inline-flex; align-items: center; gap: 9px; }
-.brand-dot { width: 10px; height: 10px; background: var(--accent); box-shadow: 0 0 12px var(--accent); transition: background .6s, box-shadow .6s; }
+.brand { text-decoration: none; display: inline-flex; flex: none; }
+.brand-logo { position: relative; display: block; width: 128px; height: 34px; overflow: hidden; }
+.brand-logo img { position: absolute; width: 217.2px; height: 72.4px; max-width: none; left: -35px; top: -18.5px; }
 .nav nav { display: flex; gap: 22px; align-items: center; font-size: 15px; }
 .nav nav a { flex: 0 0 auto; color: var(--muted); text-decoration: none; }
 .nav nav a:hover { color: var(--ink); }
