@@ -5,35 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Avni · Pixel Collapse</title>
 <meta name="description" content="Concept landing page: your YouTube Music, in a classic skin.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="apple-touch-icon" href="assets/branding/apple-touch-icon.png">
+<meta property="og:title" content="Avni — Your YouTube Music, in a classic skin.">
+<meta property="og:description" content="A skinnable macOS companion for YouTube Music.">
+<meta property="og:image" content="https://ramazanayyildiz.github.io/avni-site/assets/branding/app-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/base.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="nav">
-  <a class="brand" href="#top"><span class="brand-dot"></span>Avni</a>
-  <nav><a href="#stays">How it works</a><a href="#skins">Skins</a><a class="nav-cta" href="#build">Development status</a></nav>
+  <a class="brand" href="#hero"><span class="brand-logo"><img src="assets/branding/logo.png" alt="Avni" width="2172" height="724"></span></a>
+  <nav><a href="#stays">How it works</a><a href="#skins">Skins</a><a href="#faq">FAQ</a><a href="#privacy">Privacy</a><a class="nav-cta" href="#download">Download status</a></nav>
 </header>
 
-<main id="top">
+<main id="main-content" tabindex="-1">
   <!-- Hero: one sticky scene driven by scroll -->
   <section class="hero" id="hero" aria-label="From a modern player to a classic skin">
     <div class="stage">
       <canvas id="stage-canvas" aria-hidden="true"></canvas>
       <div class="hero-head" id="hero-head">
-        <p class="eyebrow">A macOS companion for YouTube Music</p>
+        <p class="eyebrow">Concept demo · fictional tracks and artwork</p>
         <h1>Your YouTube Music.<br><span class="accent-text">In a classic skin.</span></h1>
         <p class="lede">YouTube Music keeps your account, library and audio. Avni gives it a pixel-exact, skinnable player from the Winamp era.</p>
         <p class="scroll-hint" aria-hidden="true">Scroll ↓</p>
       </div>
-      <div class="captions" aria-live="polite">
-        <div class="cap" data-from="0.13" data-to="0.33"><b>Same song. Same second.</b><span>Watch the interface fold into 275 × 116 pixels.</span></div>
-        <div class="cap" data-from="0.34" data-to="0.47"><b>Graphite LCD</b><span>Built-in skin · the default look</span></div>
-        <div class="cap" data-from="0.51" data-to="0.63"><b>Silver Blue</b><span>Built-in skin · 1× or 2× size</span></div>
-        <div class="cap" data-from="0.67" data-to="0.77"><b>Amber Terminal</b><span>Built-in skin · panels close and reopen</span></div>
-        <div class="cap" data-from="0.78" data-to="0.87"><b>Drop in any classic .wsz skin</b><span>Validated locally, applied instantly</span></div>
-        <div class="cap" data-from="0.9" data-to="1.01"><b>Mint Cassette · imported .wsz</b><span>Made with the bundled skin kit. Same YouTube Music underneath.</span></div>
+      <div class="captions">
+        <div class="cap" aria-hidden="true" data-from="0.13" data-to="0.33"><b>One track. Two interfaces.</b><span>Concept illustration; no real playback is shown.</span></div>
+        <div class="cap" aria-hidden="true" data-from="0.34" data-to="0.47"><b>Graphite LCD</b><span>Built-in skin · the default look</span></div>
+        <div class="cap" aria-hidden="true" data-from="0.51" data-to="0.63"><b>Silver Blue</b><span>Built-in skin · 1× or 2× size</span></div>
+        <div class="cap" aria-hidden="true" data-from="0.67" data-to="0.77"><b>Amber Terminal</b><span>Built-in skin · panels close and reopen</span></div>
+        <div class="cap" aria-hidden="true" data-from="0.78" data-to="0.87"><b>Import a compatible .wsz skin</b><span>Compatibility depends on the skin's assets and features.</span></div>
+        <div class="cap" aria-hidden="true" data-from="0.9" data-to="1.01"><b>Mint Cassette · sample imported skin</b><span>Concept artwork · the same YouTube Music underneath.</span></div>
       </div>
       <ol class="skin-rail" aria-hidden="true">
         <li data-skin="graphite"></li><li data-skin="silver"></li><li data-skin="amber"></li><li data-skin="mint"></li>
@@ -71,28 +77,65 @@
     <div class="wrap">
       <p class="eyebrow">Skin kit</p>
       <h2>Five colours make a skin.</h2>
-      <p class="lede narrow">Each skin in Avni is drawn from a five-colour palette by a small Python script with no dependencies. Change the colours, run the script, and import the <code>.wsz</code> it builds.</p>
+      <p class="lede narrow">Avni's original skins use a five-colour palette and classic <code>.wsz</code> format. The app accepts compatible <code>.wsz</code> skins; unsupported formats and skin features may not work.</p>
       <div class="minis" id="minis"></div>
-      <pre class="term reveal"><code><span class="c">$</span> python3 tools/skin-kit/build.py
-<span class="m"># builds graphite.wsz, silver.wsz and amber.wsz
-# Appearance → Import .wsz skin → choose your file</span></code></pre>
+      <p class="small">The app includes three original skins and supports local import. It does not include third-party historical skin packs.</p>
     </div>
   </section>
 
-  <section class="band" id="build">
+  <section class="band" id="download">
     <div class="wrap narrow-wrap">
-      <p class="eyebrow">Try it</p>
-      <h2>In active development.</h2>
-      <p class="lede narrow">This page previews Avni's design. The macOS app is still being tested and is not available as a public download yet.</p>
-      <p class="small">The app will let you sign in through YouTube Music and browse your library in a classic, skinnable interface.</p>
+      <p class="eyebrow">Download and source</p>
+      <h2>The beta is not public yet.</h2>
+      <p class="lede narrow">This page is a design concept, not a recording of the running app. The macOS beta is being prepared; there is no public installer or source repository link yet.</p>
+      <div class="status-card" role="status">
+        <b>Release status</b>
+        <span>Signed macOS download and public source will appear here after owner review and release approval.</span>
+      </div>
+      <p class="small">The planned primary download is a signed and notarized DMG from GitHub Releases. The source link and Homebrew option will be added after they are public and verified.</p>
+      <div class="faq-list status-details">
+        <details><summary>Known limitations</summary>
+          <ul>
+            <li>Only compatible classic <code>.wsz</code> skins are supported; <code>.wal</code> skins are not.</li>
+            <li>YouTube Music owns audio playback. Audio equalization is not supported; Avni does not expose an equalizer.</li>
+            <li>Avni has no cloud library or sync. Appearance preferences and imported skins are stored locally; recent searches and playback history are not persisted by the current app.</li>
+            <li>Google and YouTube receive requests needed for sign-in, library, playback and artwork under their own policies.</li>
+          </ul>
+        </details>
+        <details><summary>Build from source</summary>
+          <p>The application source is not published yet, so visitors cannot currently build Avni from source. The owner has selected the MIT license. Internal development docs describe a local macOS build using Node.js/npm, Rust, Xcode Command Line Tools and the Tauri prerequisites; that build is an unsigned debug app, not a release installer. A browser preview does not provide native playback or skin-import behavior.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-alt" id="faq">
+    <div class="wrap narrow-wrap">
+      <p class="eyebrow">FAQ</p>
+      <h2>What the app does today.</h2>
+      <div class="faq-list">
+        <details><summary>Where do sign-in and audio happen?</summary><p>You sign in to YouTube Music in its own app web view. YouTube Music handles the account and audio; Avni mirrors playback state and presents library controls.</p></details>
+        <details><summary>Does Avni support audio equalization?</summary><p>No. YouTube Music owns audio playback and Avni does not modify its audio or expose an equalizer.</p></details>
+        <details><summary>Can I use old Winamp skins?</summary><p>You can import a compatible classic <code>.wsz</code> skin from your device. Avni includes three original skins and does not bundle historical third-party skin collections.</p></details>
+        <details><summary>Does Avni store my library in the cloud?</summary><p>No Avni account, cloud library or sync service is provided. Appearance settings, panel visibility and imported skin files are stored locally. The current app does not persist recent searches or playback history. Google and YouTube still receive requests for sign-in, library, playback and artwork.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="privacy">
+    <div class="wrap narrow-wrap">
+      <p class="eyebrow">Privacy</p>
+      <h2>Your provider session stays with YouTube Music.</h2>
+      <p class="lede narrow">Avni does not ask for your Google password or send it to an Avni server. WebKit manages the YouTube Music session on your device. Google and YouTube receive requests needed for sign-in, library, playback and artwork under their own policies.</p>
+      <p class="small">Avni has no account, cloud sync or external analytics endpoint. Startup timings are measured locally and may appear in the app process log. Remove imported skins in Appearance; clearing Avni's app-local data removes appearance settings and skin files. Classic panel visibility is stored in the app UI's local web storage. Sign out in YouTube Music to clear its separate WebKit session. <a href="https://github.com/ramazanayyildiz/avni-site/blob/main/README.md">Concept site repository and project status</a>.</p>
     </div>
   </section>
 </main>
 
 <footer class="foot">
   <p>Avni is an independent project. <b>Not affiliated with or endorsed by Google or YouTube.</b> YouTube Music is a trademark of Google LLC.</p>
-  <p>The skins shown are original and made with the bundled skin kit; no historic skin artwork is included. Track and artist names are fictional.</p>
-  <p class="small">Concept page: Pixel Collapse</p>
+  <p>The skins shown are original; no historic skin artwork is included. Track and artist names are fictional.</p>
+  <p class="small"><a href="#faq">FAQ</a> · <a href="#privacy">Privacy</a> · Concept page: Pixel Collapse</p>
 </footer>
 
 <script src="js/main.js"></script>

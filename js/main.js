@@ -39,7 +39,6 @@
 
   const reducedQuery = matchMedia("(prefers-reduced-motion: reduce)");
   let reduced = reducedQuery.matches;
-  reducedQuery.addEventListener?.("change", (e) => { reduced = e.matches; });
 
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const lerp = (a, b, t) => a + (b - a) * t;
@@ -242,7 +241,7 @@
     dpr = Math.min(2, window.devicePixelRatio || 1);
     W = canvas.clientWidth; H = canvas.clientHeight;
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
-    const top = 96, bottom = H < 700 ? 96 : 120, syncRoom = 46;
+    const top = reduced ? 20 : 96, bottom = reduced ? 20 : H < 700 ? 96 : 120, syncRoom = reduced ? 0 : 46;
     const availH = H - top - bottom - syncRoom, availW = W - 32;
     let s = Math.min(availW / 275, availH / 212, 3);
     // Whole device pixels per skin pixel on wide screens; on phones size wins.
@@ -308,7 +307,7 @@
     const { C } = L, cx = C.x + C.w / 2, y0 = Math.max(76, top - 40);
     ctx.save(); ctx.globalAlpha = alpha;
     ctx.font = `500 13px ${FAM}`;
-    const label = "YouTube Music · signed in", tw = ctx.measureText(label).width + 30;
+    const label = "YouTube Music · concept", tw = ctx.measureText(label).width + 30;
     ctx.fillStyle = "rgba(255,255,255,.04)"; ctx.strokeStyle = "rgba(255,255,255,.14)"; ctx.lineWidth = 1;
     roundRect(ctx, cx - tw / 2, y0 - 13, tw, 26, 13); ctx.fill(); ctx.stroke();
     ctx.fillStyle = accent; ctx.beginPath(); ctx.arc(cx - tw / 2 + 13, y0, 3.5, 0, Math.PI * 2); ctx.fill();
@@ -367,19 +366,36 @@
   }
 
   let heroVisible = true;
-  new IntersectionObserver(([e]) => { heroVisible = e.isIntersecting; }).observe(hero);
+  let framePending = false;
+  function scheduleFrame() {
+    if (framePending) return;
+    framePending = true;
+    requestAnimationFrame((now) => {
+      framePending = false;
+      frame(now);
+    });
+  }
+
+  new IntersectionObserver(([e]) => {
+    heroVisible = e.isIntersecting;
+    if (heroVisible && skins) scheduleFrame();
+  }).observe(hero);
 
   function frame(now) {
-    requestAnimationFrame(frame);
     if (!heroVisible || !skins || !L) return;
-    const p = progress(), secs = elapsed();
+    const p = reduced ? 1 : progress(), secs = reduced ? TRACK.start : elapsed();
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
     ctx.imageSmoothingEnabled = false;
 
     const rise = easeOut(span(p, T.rise));
-    head.style.opacity = String(1 - span(p, [0, 0.08]));
-    head.style.transform = `translate(-50%, ${-rise * 40}px)`;
+    if (reduced) {
+      head.style.opacity = "1";
+      head.style.transform = "";
+    } else {
+      head.style.opacity = String(1 - span(p, [0, 0.08]));
+      head.style.transform = `translate(-50%, ${-rise * 40}px)`;
+    }
     const collapse = span(p, T.collapse);
     const [fi, ti, wk] = activeSkin(p);
     const from = skins[fi], to = skins[ti];
@@ -418,14 +434,20 @@
       }
       const drop = span(p, T.drop);
       if (drop > 0 && drop < 1 && !reduced) drawWsz(drop, now);
-      drawSync(wk > 0.5 ? to.accent : from.accent, now, 1, L.C.y);
+      if (!reduced) drawSync(wk > 0.5 ? to.accent : from.accent, now, 1, L.C.y);
     }
 
     // Captions and skin rail.
-    for (const cap of caps) cap.classList.toggle("on", p >= +cap.dataset.from && p < +cap.dataset.to);
+    for (const cap of caps) {
+      const active = !reduced && p >= +cap.dataset.from && p < +cap.dataset.to;
+      if (cap.classList.contains("on") !== active) cap.classList.toggle("on", active);
+      const hidden = String(!active);
+      if (cap.getAttribute("aria-hidden") !== hidden) cap.setAttribute("aria-hidden", hidden);
+    }
     rail.classList.toggle("on", collapse >= 1);
     const cur = wk > 0.5 ? ti : fi;
     railDots.forEach((d, i) => d.classList.toggle("on", i === cur));
+    if (!reduced) scheduleFrame();
   }
 
   /* ---------- Skin kit minis ---------- */
@@ -439,7 +461,7 @@
       cv.setAttribute("role", "img"); cv.setAttribute("aria-label", `${skin.name} skin preview`);
       renderClassic(skin, TRACK.start, 0);
       cv.getContext("2d").drawImage(skin.canvas, 0, 0, 275, 116, 0, 0, 275, 116);
-      const h = document.createElement("h4");
+      const h = document.createElement("h3");
       h.innerHTML = `${skin.name} <small>${skin.tag === "Built-in" ? "Built-in" : "Demo · skin kit"}</small>`;
       const sw = document.createElement("div"); sw.className = "swatches";
       for (const hex of [skin.panel, skin.bg, skin.accent, skin.edge, skin.text]) {
@@ -455,9 +477,25 @@
     document.querySelectorAll(".reveal:not(.in)").forEach((el) => io.observe(el));
   }
 
-  addEventListener("resize", () => { if (skins) layout(); });
+  document.querySelector(".nav nav")?.addEventListener("focusin", (event) => {
+    const link = event.target instanceof Element ? event.target.closest("a") : null;
+    if (!link) return;
+
+    const nav = event.currentTarget;
+    const navRect = nav.getBoundingClientRect();
+    const linkRect = link.getBoundingClientRect();
+    const inset = 4;
+    if (linkRect.left < navRect.left + inset) nav.scrollLeft -= navRect.left + inset - linkRect.left;
+    else if (linkRect.right > navRect.right - inset) nav.scrollLeft += linkRect.right - (navRect.right - inset);
+  });
+
+  addEventListener("resize", () => { if (skins) { layout(); if (reduced) scheduleFrame(); } });
+  reducedQuery.addEventListener?.("change", (e) => {
+    reduced = e.matches;
+    if (skins) { layout(); scheduleFrame(); }
+  });
   observeReveals();
   (document.fonts?.ready || Promise.resolve()).then(() => { FAM = getComputedStyle(document.body).fontFamily; }).then(loadSkins).then((s) => {
-    skins = s; layout(); buildMinis(); requestAnimationFrame(frame);
+    skins = s; layout(); buildMinis(); scheduleFrame();
   }).catch((err) => console.error("Skin sprites failed to load", err));
 })();
